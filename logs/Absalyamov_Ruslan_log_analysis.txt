@@ -1,0 +1,6 @@
+1:Student: Absalyamov Ruslan
+3:User: ruslan
+19:/Users/ruslan/Downloads/Visual Studio Code.app   228Gi   138Gi    69Gi    67%    1.4M  718M    0%   /private/var/folders/gq/2jzglyr519ld9s2gl7pyrppm0000gn/T/AppTranslocation/80E26B16-AE25-485C-85B9-218E603A216D
+33:/Users/ruslan/Downloads/Visual Studio Code.app   228Gi   138Gi    69Gi    67%    1.4M  718M    0%   /private/var/folders/gq/2jzglyr519ld9s2gl7pyrppm0000gn/T/AppTranslocation/80E26B16-AE25-485C-85B9-218E603A216D
+39:Name: Ruslan
+48:Username: ruslan
