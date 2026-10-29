@@ -45,7 +45,7 @@ pipeline {
 
         stage('Verify') {
             steps {
-                sh "docker image inspect ${IMAGE_NAME}:${IMAGE_TAG}'"
+                sh "docker image inspect ${IMAGE_NAME}:${IMAGE_TAG}"
                 echo "Image ${IMAGE_NAME}:${IMAGE_TAG} built successfully for ${STUDENT_NAME}"
             }
         }
