@@ -1,8 +1,39 @@
+name: absalyamov-ruslan-student-api
+
 services:
-  student-api:
+  app:
     build: .
-    image: absalyamov-ruslan-student-api:latest
-    container_name: student-api
+    image: absalyamov-ruslan-student-api:v1.0-absalyamov-ruslan
     ports:
-      - "8080:8080"
-    restart: unless-stopped
+      - "8082:8082"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/studentdb
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 1234
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - student-net
+
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: studentdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres", "-d", "studentdb"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - student-net
+
+volumes:
+  pgdata:
+
+networks:
+  student-net:

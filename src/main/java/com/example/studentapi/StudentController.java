@@ -1,23 +1,52 @@
 package com.example.studentapi;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
 @RestController
 @RequestMapping("/students")
 public class StudentController {
-    private final Map<Long, Student> students = new HashMap<>();
-    private long nextId = 1;
+    private final StudentRepository repository;
+
+    public StudentController(StudentRepository repository) {
+        this.repository = repository;
+    }
 
     @PostMapping
     public Student create(@RequestBody Student student) {
-        student.setId(nextId++);
-        students.put(student.getId(), student);
-        return student;
+        student.setId(null);
+        return repository.save(student);
     }
 
     @GetMapping
-    public Collection<Student> getAll() {
-        return students.values();
+    public List<Student> getAll() {
+        return repository.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Student> getById(@PathVariable Long id) {
+        return repository.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Student> update(@PathVariable Long id, @RequestBody Student updated) {
+        return repository.findById(id)
+                .map(student -> {
+                    student.setName(updated.getName());
+                    return ResponseEntity.ok(repository.save(student));
+                })
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        if (!repository.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        }
+        repository.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }
