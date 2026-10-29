@@ -9,6 +9,5 @@ class StudentApiApplicationTests {
 
     @Test
     void contextLoads() {
-        Assertions.fail("manual error by Absalyamov Ruslan");
     }
 }
